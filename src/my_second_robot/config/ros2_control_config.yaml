@@ -1,0 +1,29 @@
+# Minimal ros2_control configuration for irb6640_205
+
+ros2_control:
+  irb6640_205:
+    hardware_interface:
+      type: system
+      plugin: robot_hardware_inteface/RobotHardwareInteface
+
+    joints:
+      - joint_1
+
+    command_interfaces:
+      - position
+
+    state_interfaces:
+      - position
+      - velocity
+      - acceleration
+
+    controllers:
+      joint_state_broadcaster:
+        type: joint_state_broadcaster/JointStateBroadcaster
+
+      position_controller:
+        type: joint_trajectory_controller/JointTrajectoryController
+        joints:
+          - joint_1
+        command_interfaces:
+          - position
