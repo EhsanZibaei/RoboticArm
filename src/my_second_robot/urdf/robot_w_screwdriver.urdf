@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <!-- NOTE! robot name has to be set to match description package -->
-<robot name="irb6640_205">
+<robot name="my_second_robot">
   <!-- Conversion were obtained from http://www.e-paint.co.uk/Lab_values.asp
        unless otherwise stated. -->
   <!-- LINKS -->
@@ -301,7 +301,7 @@
   </joint>
   <ros2_control name="irb6640_205" type="system">
     <hardware>
-      <plugin>robot_hardware_inteface/RobotHardwareInteface</plugin>
+        <plugin>mock_components/GenericSystem</plugin>  <!-- ✅ Use default interface -->
     </hardware>
     <joint name="joint_1">
       <command_interface name="position">
