@@ -1,29 +1,28 @@
-# Minimal ros2_control configuration for irb6640_205
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Control loop update rate in Hz
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    joint_1_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
 
-ros2_control:
-  irb6640_205:
-    hardware_interface:
-      type: system
-      plugin: robot_hardware_inteface/RobotHardwareInteface
+joint_state_broadcaster:
+  ros__parameters: {}
 
+joint_1_controller:
+  ros__parameters:
     joints:
       - joint_1
-
     command_interfaces:
       - position
-
     state_interfaces:
       - position
       - velocity
-      - acceleration
-
-    controllers:
-      joint_state_broadcaster:
-        type: joint_state_broadcaster/JointStateBroadcaster
-
-      position_controller:
-        type: joint_trajectory_controller/JointTrajectoryController
-        joints:
-          - joint_1
-        command_interfaces:
-          - position
+    gains:
+      joint_1:
+        p: 100.0
+        d: 1.0
+        i: 0.1
+        i_clamp: 1.0
+    allow_partial_joints_goal: true
+    open_loop_control: false
