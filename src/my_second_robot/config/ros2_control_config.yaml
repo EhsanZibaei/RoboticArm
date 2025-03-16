@@ -5,26 +5,21 @@ controller_manager:
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    joint_1_controller:
-      type: position_controllers/JointGroupPositionController  # Specify controller type
+    joint_controller:
+      # type: joint_trajectory_controller/JointTrajectoryController
+      type: position_controllers/JointGroupPositionController 
 
 hardware_interface:
   ros__parameters:
-    type: mock_components/GenericSystem  
+    type: mock_components/GenericSystemMultiInterface  
 
-joint_1_controller:
+joint_controller:
   ros__parameters:
     joints:
-      - joint_1
+      - joint_6
     command_interfaces:
       - position
     state_interfaces:
       - position
       - velocity
-    pid:
-      p: 100.0
-      d: 1.0
-      i: 0.1
-      i_clamp: 1.0
-    allow_partial_joints_goal: true
-    open_loop_control: false
+      - effort
