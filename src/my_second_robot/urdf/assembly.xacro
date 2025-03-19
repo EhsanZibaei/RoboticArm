@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="assembly">
+  <link name="base">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.01"/> <!-- Small base plate -->
+            </geometry>
+            <material name="gray">
+                <color rgba="0.5 0.5 0.5 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.01"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.1"/>
+            <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+  <!-- Include my_second_robot -->
+  <xacro:include filename="$(find my_second_robot)/urdf/robot_in_gz.urdf"/>
+  <!-- <xacro:robot_w_screwdriver/> -->
+  
+  <!-- Include screw_model -->
+  <xacro:include filename="$(find my_second_robot)/urdf/screws_in_gz.urdf"/>
+  <!-- <xacro:screws/> -->
+
+  
+</robot>

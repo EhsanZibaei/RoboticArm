@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <!-- NOTE! robot name has to be set to match description package -->
 <robot name="my_second_robot">
+  <!-- Content -->
+
   <!-- Conversion were obtained from http://www.e-paint.co.uk/Lab_values.asp
        unless otherwise stated. -->
   <!-- LINKS -->
@@ -292,7 +294,7 @@
   <!-- Standard frames for industrial robots. Also useful for manipulators.
          (ROS-I specs - https://wiki.ros.org/Industrial/Tutorials/WorkingWithRosIndustrialRobotSupportPackages#Standardised_links_.2F_frames)-->
   <!-- This frame should correspond to the BASE coordinate system of robot's controller.) -->
-  <link name="base"/>
+  <!-- <link name="base"/> -->
   <!-- ROS base_link to ABB World Coordinates transform -->
   <joint name="base_link-base" type="fixed">
     <origin xyz="0 0 0"/>
@@ -389,4 +391,7 @@
         <state_interface name="position"/>
       </joint> -->
   </ros2_control>
+      <gazebo reference="base">
+        <material>Gazebo/Grey</material>
+    </gazebo>
 </robot>
