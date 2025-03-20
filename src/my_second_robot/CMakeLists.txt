@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(ros_gz REQUIRED)
+find_package(robot_state_publisher REQUIRED)
 # find_package(xacro REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
@@ -16,5 +17,8 @@ install(
   DIRECTORY urdf meshes launch config worlds materials
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_environment_hooks("${CMAKE_CURRENT_SOURCE_DIR}/hooks/${PROJECT_NAME}.dsv.in")
+
 
 ament_package()
