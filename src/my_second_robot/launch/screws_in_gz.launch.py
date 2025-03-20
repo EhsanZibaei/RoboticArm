@@ -8,17 +8,13 @@ from launch.substitutions import Command, PathJoinSubstitution, LaunchConfigurat
 
 def generate_launch_description():
     pkg_share = get_package_share_directory('my_second_robot')
+    world_file = os.path.join(pkg_share, 'worlds', 'empty.sdf')
 
-    world_file = PathJoinSubstitution([
-        os.path.join(pkg_share, 'worlds', 'empty.sdf')
-    ])
-
-    
     # Path to assembly.xacro
-    robot_desc_path = PathJoinSubstitution([
-        os.path.join(pkg_share, 'urdf', 'screws.urdf')
-    ])
-    
+    robot_desc_path = os.path.join(pkg_share, 'urdf', 'screws.urdf')
+    with open(robot_desc_path, 'r') as infp:
+        robot_desc = infp.read()
+
     # Gazebo launch
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource([
@@ -32,7 +28,7 @@ def generate_launch_description():
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
-        parameters=[{'robot_description': Command(['xacro ', robot_desc_path])}]
+        parameters=[{'robot_description': robot_desc}]
     )
     
     # Spawn robot in Gazebo
