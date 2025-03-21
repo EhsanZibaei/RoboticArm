@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
-<!-- NOTE! robot name has to be set to match description package -->
-<robot name="my_second_robot">
+<robot name="my_second_robot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:property name="prefix" value=""/>
+  <!-- NOTE! robot name has to be set to match description package -->
   <!-- Content -->
 
   <!-- Conversion were obtained from http://www.e-paint.co.uk/Lab_values.asp
@@ -303,7 +304,7 @@
   </joint> -->
   <ros2_control name="irb6640_205" type="system">
     <hardware>
-        <plugin>mock_components/GenericSystem</plugin>  <!-- ✅ Use default interface -->
+        <plugin>gz_ros2_control/GazeboSimSystem</plugin>  <!-- ✅ Use default interface -->
     </hardware>
     <joint name="joint_1">
       <command_interface name="position">
@@ -378,17 +379,17 @@
       <state_interface name="acceleration"/>
     </joint>
     <!-- Mimic joints -->
-    <!-- <joint name="${prefix}piston_joint">
+    <joint name="${prefix}piston_joint">
         <param name="mimic">joint_2</param>
         <param name="multiplier">-1.3</param>
-        <command_interface name="position"/>     
+        <!-- Remove command_interface for mimic joint -->
         <state_interface name="position"/>
-      </joint>
-      <joint name="${prefix}cylinder_joint">
+    </joint>
+    <joint name="${prefix}cylinder_joint">
         <param name="mimic">joint_2</param>
         <param name="multiplier">-0.3</param>
-        <command_interface name="position"/>     
+        <!-- Remove command_interface for mimic joint -->
         <state_interface name="position"/>
-      </joint> -->
+    </joint>
   </ros2_control>
 </robot>
