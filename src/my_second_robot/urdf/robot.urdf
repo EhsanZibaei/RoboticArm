@@ -294,13 +294,13 @@
   <!-- Standard frames for industrial robots. Also useful for manipulators.
          (ROS-I specs - https://wiki.ros.org/Industrial/Tutorials/WorkingWithRosIndustrialRobotSupportPackages#Standardised_links_.2F_frames)-->
   <!-- This frame should correspond to the BASE coordinate system of robot's controller.) -->
-  <link name="base"/>
+  <!-- <link name="base"/> -->
   <!-- ROS base_link to ABB World Coordinates transform -->
-  <joint name="base_link-base" type="fixed">
+  <!-- <joint name="base_link-base" type="fixed">
     <origin xyz="0 0 0"/>
     <parent link="base_link"/>
     <child link="base"/>
-  </joint>
+  </joint> -->
   <ros2_control name="irb6640_205" type="system">
     <hardware>
         <plugin>mock_components/GenericSystem</plugin>  <!-- ✅ Use default interface -->
@@ -391,7 +391,4 @@
         <state_interface name="position"/>
       </joint> -->
   </ros2_control>
-      <gazebo reference="base">
-        <material>Gazebo/Grey</material>
-    </gazebo>
 </robot>

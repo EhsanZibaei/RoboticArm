@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="screws">
-    <link name="base"/>
+    <!-- <link name="base"/> -->
     <!-- Box Link (Attached to Base) -->
     <link name="box">
         <visual>
@@ -23,11 +23,11 @@
     </link>
 
     <!-- Joint to attach box to base (fixed) -->
-    <joint name="box_joint" type="fixed">
+    <!-- <joint name="box_joint" type="fixed">
         <parent link="base"/>
         <child link="box"/>
-        <origin xyz="0 0 0.5" rpy="0 0 0"/>  <!-- Centered above base -->
-    </joint>
+        <origin xyz="0 0 0.5" rpy="0 0 0"/>  
+    </joint> -->
 
     <!-- Screw Link (Revolute on Box) -->
     <link name="screw_torx_T30">
