@@ -1,17 +1,12 @@
 controller_manager:
   ros__parameters:
-    update_rate: 100  # Control loop update rate in Hz
+    update_rate: 1000  # Control loop update rate in Hz
 
     joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
     joint_controller:
-      # type: joint_trajectory_controller/JointTrajectoryController
       type: position_controllers/JointGroupPositionController 
-
-hardware_interface:
-  ros__parameters:
-    type: mock_components/GenericSystemMultiInterface  
 
 joint_controller:
   ros__parameters:
@@ -27,4 +22,3 @@ joint_controller:
     state_interfaces:
       - position
       - velocity
-      - effort
