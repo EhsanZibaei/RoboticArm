@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: my_second_robot
+    relative_path: urdf/assembly.urdf
+  srdf:
+    relative_path: config/assembly.srdf
+  package_settings:
+    author_name: test
+    author_email: test@test.com
+    generated_timestamp: 1742930191
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
