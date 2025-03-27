@@ -1,0 +1,81 @@
+ros2 topic pub /joint_controller/commands std_msgs/msg/Float64MultiArray "data: [0.0, 0.5, -1.0, 0.3, -0.5, 1.2]"
+
+
+ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "
+header:
+  stamp:
+    sec: 0
+    nanosec: 0
+  frame_id: ''
+joint_names: ['slider_to_cart']
+points:
+- positions: [30]
+  velocities: []
+  accelerations: []
+  time_from_start:
+    sec: 30
+    nanosec: 0"
+
+
+
+ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/msg/JointTrajectory "header:
+  stamp:
+    sec: 0
+    nanosec: 0
+  frame_id: ''
+joint_names:
+  - 'joint_1'
+points:
+  - positions: [0.9]
+    velocities: []
+    accelerations: []
+    effort: []
+    time_from_start:
+      sec: 10
+      nanosec: 0"
+
+ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "joint_names:
+- 'joint_1'
+- 'joint_2'
+- 'joint_3'
+- 'joint_4'
+- 'joint_5'
+- 'joint_6'
+points:
+- positions: [0.9, 0.0, 0.0, 0.0, 0.0, 0.0]
+  time_from_start:
+    sec: 10
+    nanosec: 0"
+
+
+# ros2 action send_goal /move_action moveit_msgs/action/MoveGroup "{
+# request: {
+#   group_name: 'g1',  # <-- Change this to your SRDF-defined planning group name
+#   goal_constraints: [
+#     {
+#       position_constraints: [
+#         {
+#           header: { frame_id: 'base_link' },  # base frame of your robot
+#           link_name: 'screwdriver_tcp',       # your end-effector/tool frame
+#           constraint_region: {
+#             primitive_poses: [{
+#               position: { x: 1.0, y: 1.0, z: 1 },
+#               orientation: { x: 0.0, y: 0.0, z: 0.0, w: 1.0 }
+#             }],
+#             primitives: [{ type: 1, dimensions: [0.001, 0.001, 0.001] }]
+#           },
+#           weight: 1.0
+#         }
+#       ]
+#     }
+#   ],
+#   allowed_planning_time: 5.0,
+#   num_planning_attempts: 1
+# },
+# planning_options: {
+#   plan_only: true,
+#   look_around: false,
+#   replan: false
+# }
+# }"
+
