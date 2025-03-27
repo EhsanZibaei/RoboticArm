@@ -3,12 +3,19 @@
     <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
 
     <!-- Import assembly urdf file -->
-    <xacro:include filename="$(find my_second_robot)/urdf/assembly.urdf" />
+    <xacro:include filename="$(find my_second_robot)/urdf/assembly.xacro" />
 
     <!-- Import control_xacro -->
     <xacro:include filename="assembly.ros2_control.xacro" />
 
 
-    <xacro:assembly_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
-
+    <!-- <xacro:assembly_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/> -->
+    <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <ros>
+        <!-- Relative path to your controllers YAML file -->
+        <param>ros2_controllers.yaml</param>
+      </ros>
+    </plugin>
+  </gazebo>
 </robot>

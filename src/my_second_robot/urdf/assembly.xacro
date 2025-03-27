@@ -36,7 +36,7 @@
   <!-- Gazebo Plugin for ros2_control -->
   <gazebo>
     <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
-      <parameters>$(find my_second_robot)/config/ros2_control_config.yaml</parameters>
+      <parameters>$(find moving5)/config/ros2_controllers.yaml</parameters>
     </plugin>
   </gazebo>
 </robot>

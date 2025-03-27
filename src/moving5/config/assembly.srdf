@@ -17,6 +17,7 @@
         <joint name="joint_5"/>
         <joint name="joint_6"/>
         <joint name="cylinder_joint"/>
+        <joint name="piston_joint"/>
     </group>
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="cylinder_joint"/>
