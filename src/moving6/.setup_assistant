@@ -1,0 +1,25 @@
+moveit_setup_assistant_config:
+  urdf:
+    package: moving6
+    relative_path: config/circu.urdf.xacro
+  srdf:
+    relative_path: config/circu.srdf
+  package_settings:
+    author_name: test
+    author_email: test@test.com
+    generated_timestamp: 1743167444
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
+  modified_urdf:
+    xacros:
+      - control_xacro
+  control_xacro:
+    command:
+      - position
+    state:
+      - position
+      - velocity
