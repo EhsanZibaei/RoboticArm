@@ -53,9 +53,28 @@ def generate_launch_description():
         parameters=[moveit_config.to_dict()],
     )
 
+    # RViz
+    rviz_config_file = (
+        get_package_share_directory("moving6") + "/config/moveit.rviz"
+    )
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="log",
+        arguments=["-d", rviz_config_file],
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            moveit_config.planning_pipelines,
+            moveit_config.joint_limits,
+        ],
+    )
     return LaunchDescription(
     [
         robot_state_publisher_node,
         run_move_group_node,
+        rviz_node,
     ]
     )
