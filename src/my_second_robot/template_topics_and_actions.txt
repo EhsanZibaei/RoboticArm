@@ -34,7 +34,7 @@ points:
       sec: 10
       nanosec: 0"
 
-ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "joint_names:
+ros2 topic pub /g1_controller/joint_trajectory trajectory_msgs/JointTrajectory "joint_names:
 - 'joint_1'
 - 'joint_2'
 - 'joint_3'
