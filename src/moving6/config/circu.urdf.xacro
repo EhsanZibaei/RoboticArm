@@ -10,5 +10,9 @@
 
 
     <xacro:circu_ros2_control name="FakeSystem" initial_positions_file="$(arg initial_positions_file)"/>
-
+    <gazebo>
+        <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+            <parameters>$(find moving6)/config/ros2_controllers.yaml</parameters>
+        </plugin>
+    </gazebo>
 </robot>
