@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
+from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription, ExecuteProcess
 from launch.actions import RegisterEventHandler
 from launch.event_handlers import OnProcessExit
 from launch.launch_description_sources import PythonLaunchDescriptionSource
@@ -127,6 +127,7 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
+        # arguments=["--ros-args", "--log-level", "debug"],
         parameters=[moveit_config.to_dict(),
                     {'use_sim_time': use_sim_time},
                     ],
@@ -150,6 +151,21 @@ def generate_launch_description():
             moveit_config.joint_limits,
         ],
     )
+
+    # Foxglove Bridge Node
+    foxglove_bridge = Node(
+        package="foxglove_bridge",
+        executable="foxglove_bridge",
+        name="foxglove_bridge",
+        output="log",
+        parameters=[{"port": 8765}],  # Default WebSocket port
+    )
+
+    # Command to launch Foxglove Studio
+    foxglove_studio = ExecuteProcess(
+        cmd=["/opt/Foxglove Studio/foxglove-studio"],
+    )
+
     return LaunchDescription([
         # Launch gazebo environment
         IncludeLaunchDescription(
@@ -176,6 +192,8 @@ def generate_launch_description():
         gz_spawn_entity,
         run_move_group_node,
         rviz_node,
+        foxglove_bridge,
+        foxglove_studio,
         # Launch Arguments
         DeclareLaunchArgument(
             'use_sim_time',
