@@ -127,7 +127,28 @@ def generate_launch_description():
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
-        parameters=[moveit_config.to_dict()],
+        parameters=[moveit_config.to_dict(),
+                    {'use_sim_time': use_sim_time},
+                    ],
+    )
+
+    # RViz
+    rviz_config_file = (
+        get_package_share_directory("moving6") + "/config/moveit.rviz"
+    )
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="log",
+        arguments=["-d", rviz_config_file],
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            moveit_config.planning_pipelines,
+            moveit_config.joint_limits,
+        ],
     )
     return LaunchDescription([
         # Launch gazebo environment
@@ -154,6 +175,7 @@ def generate_launch_description():
         node_robot_state_publisher,
         gz_spawn_entity,
         run_move_group_node,
+        rviz_node,
         # Launch Arguments
         DeclareLaunchArgument(
             'use_sim_time',
