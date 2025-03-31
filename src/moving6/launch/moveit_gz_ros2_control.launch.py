@@ -92,7 +92,9 @@ def generate_launch_description():
     ros2_control_node = Node(
         package="controller_manager",
         executable="ros2_control_node",
-        parameters=[robot_controllers],
+        parameters=[robot_controllers,
+                    {'use_sim_time': use_sim_time},
+                    ],
         remappings=[
             ("/controller_manager/robot_description", "/robot_description"),
         ],
@@ -129,6 +131,39 @@ def generate_launch_description():
         output="screen",
         parameters=[moveit_config.to_dict()],
     )
+
+    # RViz for visualization
+    rviz_config = PathJoinSubstitution(
+        [
+            FindPackageShare("moving6"),
+            "config",
+            "moveit.rviz",
+        ]
+    )
+    rviz_node = Node(
+        package="rviz2",
+        executable="rviz2",
+        name="rviz2",
+        output="log",
+        arguments=["-d", rviz_config],
+        parameters=[
+            moveit_config.robot_description,
+            moveit_config.robot_description_semantic,
+            moveit_config.robot_description_kinematics,
+            moveit_config.planning_pipelines,
+            moveit_config.joint_limits,
+            {'use_sim_time': use_sim_time},
+        ],
+    )
+
+    # Static TF
+    static_tf = Node(
+        package="tf2_ros",
+        executable="static_transform_publisher",
+        name="static_transform_publisher",
+        output="log",
+        arguments=["--frame-id", "world", "--child-frame-id", "base_link"],
+    )
     return LaunchDescription([
         # Launch gazebo environment
         IncludeLaunchDescription(
@@ -154,6 +189,8 @@ def generate_launch_description():
         node_robot_state_publisher,
         gz_spawn_entity,
         run_move_group_node,
+        rviz_node,
+        static_tf,
         # Launch Arguments
         DeclareLaunchArgument(
             'use_sim_time',
