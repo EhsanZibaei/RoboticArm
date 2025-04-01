@@ -36,6 +36,7 @@
 
 #include <moveit/move_group_interface/move_group_interface.hpp>
 #include <moveit/planning_scene_interface/planning_scene_interface.hpp>
+#include <moveit/robot_state/robot_state.hpp>
 
 #include <moveit_msgs/msg/display_robot_state.hpp>
 #include <moveit_msgs/msg/display_trajectory.hpp>
@@ -62,7 +63,7 @@ int main(int argc, char** argv)
   std::thread([&executor]() { executor.spin(); }).detach();
 
   // BEGIN_TUTORIAL
-  static const std::string PLANNING_GROUP = "panda_arm";
+  static const std::string PLANNING_GROUP = "g1";
 
   // :moveit_codedir:`MoveGroupInterface<moveit_ros/planning_interface/move_group_interface/include/moveit/move_group_interface/move_group_interface.hpp>`
   // class can be easily set up using just the name of the planning group you would like to control and plan for.
@@ -76,24 +77,57 @@ int main(int argc, char** argv)
   RCLCPP_INFO(LOGGER, "End effector link: %s", move_group.getEndEffectorLink().c_str());
 
   // We can get a list of all the groups in the robot:
-  RCLCPP_INFO(LOGGER, "Available Planning Groups:");
-  std::copy(move_group.getJointModelGroupNames().begin(), move_group.getJointModelGroupNames().end(),
-            std::ostream_iterator<std::string>(std::cout, ", "));
+  RCLCPP_INFO(LOGGER, "Available Planning Group: %s", move_group.getName().c_str());
 
 
+  for (const auto& joint : move_group.getActiveJoints()) {
+    RCLCPP_INFO(LOGGER, "Active joint: %s", joint.c_str());
+}
   // Planning to a Pose goal
 
-  geometry_msgs::msg::Pose target_pose1;
-  target_pose1.orientation.w = 1.0;
-  target_pose1.position.x = 0.28;
-  target_pose1.position.y = -0.2;
-  target_pose1.position.z = 0.5;
-  move_group.setPoseTarget(target_pose1);
+  // geometry_msgs::msg::Pose goal_pose;
+  // goal_pose.orientation.w = 1.0;
+  // goal_pose.position.x = 0.3;
+  // goal_pose.position.y = 0.0;
+  // goal_pose.position.z = 0.0;
+  // move_group.setPoseTarget(goal_pose);
+
+  geometry_msgs::msg::Pose curr_pose = move_group.getCurrentPose().pose;
+  geometry_msgs::msg::Pose goal_pose = curr_pose;
+
+  goal_pose.position.x = 0.0; 
+  goal_pose.position.y = 0.0;
+  goal_pose.position.z = 0.9;
+
+  // moveit::core::RobotStatePtr kinematic_state = move_group.getCurrentState();
+  // const moveit::core::JointModelGroup* joint_model_group =
+  //     kinematic_state->getJointModelGroup(move_group.getName());
+
+  RCLCPP_INFO(LOGGER, "Current Pose: x=%.3f y=%.3f z=%.3f",
+    curr_pose.position.x, curr_pose.position.y, curr_pose.position.z);
+
+  RCLCPP_INFO(LOGGER, "Goal Pose: x=%.3f y=%.3f z=%.3f",
+    goal_pose.position.x, goal_pose.position.y, goal_pose.position.z);
+
+
+  // bool found_ik = kinematic_state->setFromIK(joint_model_group, goal_pose);
+
+  // if (!found_ik) {
+  //     RCLCPP_WARN(LOGGER, "IK solution not found for goal pose!");
+  // }
 
   moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-
+  move_group.setPoseTarget(goal_pose);
   bool success = (move_group.plan(my_plan) == moveit::core::MoveItErrorCode::SUCCESS);
 
+  RCLCPP_INFO(LOGGER, "planning results: %s", success ? "SUCCESS" : "FAILED");
+
+  // Move the robot based on the plan
+  if (success) {
+    move_group.execute(my_plan);
+  } else {
+    RCLCPP_WARN(LOGGER, "Failed to execute the plan");
+  }
   rclcpp::shutdown();
   return 0;
 }
