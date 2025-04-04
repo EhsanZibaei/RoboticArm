@@ -74,4 +74,9 @@
     <disable_collisions link1="link6" link2="screwdriver" reason="Adjacent"/>
     <disable_collisions link1="piston_link" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="piston_link" link2="screwdriver" reason="Never"/>
+    <disable_collisions link1="box" link2="screw_0" reason="Never"/>
+    <disable_collisions link1="box" link2="screw_1" reason="Never"/>
+    <disable_collisions link1="box" link2="screw_2" reason="Never"/>
+    <disable_collisions link1="box" link2="screw_3" reason="Never"/>
+    <disable_collisions link1="box" link2="screw_4" reason="Never"/>
 </robot>

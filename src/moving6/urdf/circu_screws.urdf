@@ -4,7 +4,7 @@
     <link name="box">
         <visual>
             <geometry>
-                <box size="1 1 1"/>  <!-- 1x1x1 meter box, extending from 0 to 1 in Z -->  <!-- 1x1x1 meter box -->
+                <box size="1 1 1"/>
             </geometry>
             <material name="transparent_gray">
                 <color rgba="0.5 0.5 0.5 0.5"/>
@@ -21,11 +21,12 @@
         </inertial>
     </link>
 
-    <!-- Screw Link (Revolute on Box) -->
-    <link name="screw_torx_T30">
+    <!-- Screw Links and Joints -->
+    <!-- Screw 0 -->
+    <link name="screw_0">
         <visual>
             <geometry>
-                <cylinder length="0.3" radius="0.025"/>  <!-- Approximate screw dimensions -->
+                <cylinder length="0.03" radius="0.015"/>
             </geometry>
             <material name="blue">
                 <color rgba="0 0 1 1"/>
@@ -33,7 +34,7 @@
         </visual>
         <collision>
             <geometry>
-                <cylinder length="0.3" radius="0.025"/>
+                <cylinder length="0.03" radius="0.015"/>
             </geometry>
         </collision>
         <inertial>
@@ -41,21 +42,124 @@
             <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
-
-    <!-- Revolute Joint to Attach the Screw to the Box -->
-    <joint name="screw_joint" type="revolute">
+    <joint name="screw_joint_0" type="revolute">
         <parent link="box"/>
-        <child link="screw_torx_T30"/>
-        <origin xyz="0 0 0.35" rpy="0 0 0"/>  <!-- Positioned above the box -->
+        <child link="screw_0"/>
+        <origin xyz="0 0 0.486" rpy="0 0.00688 0"/>
         <axis xyz="0 0 1"/>
         <limit effort="1.0" velocity="1.0" lower="-3.14" upper="3.14"/>
     </joint>
-    <!-- Gazebo-Specific Extensions -->
 
-    <gazebo reference="box">
-        <material>Gazebo/TransparentGray</material> 
-    </gazebo>
-    <gazebo reference="screw_torx_T30">
-        <material>Gazebo/Red</material>
-    </gazebo>
+    <!-- Screw 1 -->
+    <link name="screw_1">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.002"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+    <joint name="screw_joint_1" type="revolute">
+        <parent link="box"/>
+        <child link="screw_1"/>
+        <origin xyz="0 0.04 0.486" rpy="0 0.00688 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1.0" velocity="1.0" lower="-3.14" upper="3.14"/>
+    </joint>
+
+    <!-- Screw 2 -->
+    <link name="screw_2">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.002"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+    <joint name="screw_joint_2" type="revolute">
+        <parent link="box"/>
+        <child link="screw_2"/>
+        <origin xyz="0 0.08 0.486" rpy="0 0.00688 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1.0" velocity="1.0" lower="-3.14" upper="3.14"/>
+    </joint>
+
+    <!-- Screw 3 -->
+    <link name="screw_3">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.002"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+    <joint name="screw_joint_3" type="revolute">
+        <parent link="box"/>
+        <child link="screw_3"/>
+        <origin xyz="0 0.12 0.486" rpy="0 0.00688 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1.0" velocity="1.0" lower="-3.14" upper="3.14"/>
+    </joint>
+
+    <!-- Screw 4 -->
+    <link name="screw_4">
+        <visual>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+            <material name="blue">
+                <color rgba="0 0 1 1"/>
+            </material>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.03" radius="0.015"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <mass value="0.002"/>
+            <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+        </inertial>
+    </link>
+    <joint name="screw_joint_4" type="revolute">
+        <parent link="box"/>
+        <child link="screw_4"/>
+        <origin xyz="0 0.16 0.486" rpy="0 0.00688 0"/>
+        <axis xyz="0 0 1"/>
+        <limit effort="1.0" velocity="1.0" lower="-3.14" upper="3.14"/>
+    </joint>
+
 </robot>
