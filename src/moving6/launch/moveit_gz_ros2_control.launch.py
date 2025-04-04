@@ -81,6 +81,15 @@ def generate_launch_description():
             ],
     )
 
+    screwdriver_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'screwdriver_controller',
+            '--param-file',
+            robot_controllers,
+            ],
+    )
     # Bridge
     bridge = Node(
         package='ros_gz_bridge',
@@ -194,6 +203,7 @@ def generate_launch_description():
         rviz_node,
         foxglove_bridge,
         foxglove_studio,
+        screwdriver_controller_spawner,
         # Launch Arguments
         DeclareLaunchArgument(
             'use_sim_time',

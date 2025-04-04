@@ -18,12 +18,10 @@
         <joint name="joint_6"/>
         <joint name="joint_6-tool0"/>
         <joint name="tool0-screwdriver"/>
-        <joint name="screwdriver-screwdriver_tcp"/>
     </group>
     <!--PASSIVE JOINT: Purpose: this element is used to mark joints that are not actuated-->
     <passive_joint name="cylinder_joint"/>
     <passive_joint name="piston_joint"/>
-    <passive_joint name="screw_joint"/>
     <!--DISABLE COLLISIONS: By default it is assumed that any link of the robot could potentially come into collision with any other link in the robot. This tag disables collision checking between a specified pair of links. -->
     <disable_collisions link1="base_link" link2="box" reason="Adjacent"/>
     <disable_collisions link1="base_link" link2="cylinder_link" reason="Never"/>
@@ -31,11 +29,9 @@
     <disable_collisions link1="base_link" link2="link2" reason="Never"/>
     <disable_collisions link1="base_link" link2="link3" reason="Never"/>
     <disable_collisions link1="base_link" link2="piston_link" reason="Never"/>
-    <disable_collisions link1="base_link" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="box" link2="cylinder_link" reason="Never"/>
     <disable_collisions link1="box" link2="link1" reason="Never"/>
     <disable_collisions link1="box" link2="piston_link" reason="Never"/>
-    <disable_collisions link1="box" link2="screw_torx_T30" reason="Adjacent"/>
     <disable_collisions link1="cylinder_link" link2="link1" reason="Adjacent"/>
     <disable_collisions link1="cylinder_link" link2="link2" reason="Never"/>
     <disable_collisions link1="cylinder_link" link2="link3" reason="Never"/>
@@ -43,7 +39,6 @@
     <disable_collisions link1="cylinder_link" link2="link5" reason="Never"/>
     <disable_collisions link1="cylinder_link" link2="link6" reason="Never"/>
     <disable_collisions link1="cylinder_link" link2="piston_link" reason="Always"/>
-    <disable_collisions link1="cylinder_link" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="cylinder_link" link2="screwdriver" reason="Never"/>
     <disable_collisions link1="link1" link2="link2" reason="Adjacent"/>
     <disable_collisions link1="link1" link2="link3" reason="Never"/>
@@ -51,13 +46,11 @@
     <disable_collisions link1="link1" link2="link5" reason="Never"/>
     <disable_collisions link1="link1" link2="link6" reason="Never"/>
     <disable_collisions link1="link1" link2="piston_link" reason="Never"/>
-    <disable_collisions link1="link1" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="link2" link2="link3" reason="Adjacent"/>
     <disable_collisions link1="link2" link2="link4" reason="Never"/>
     <disable_collisions link1="link2" link2="link5" reason="Never"/>
     <disable_collisions link1="link2" link2="link6" reason="Never"/>
     <disable_collisions link1="link2" link2="piston_link" reason="Adjacent"/>
-    <disable_collisions link1="link2" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="link3" link2="link4" reason="Adjacent"/>
     <disable_collisions link1="link3" link2="link5" reason="Never"/>
     <disable_collisions link1="link3" link2="link6" reason="Never"/>
@@ -72,7 +65,6 @@
     <disable_collisions link1="link5" link2="screwdriver" reason="Never"/>
     <disable_collisions link1="link6" link2="piston_link" reason="Never"/>
     <disable_collisions link1="link6" link2="screwdriver" reason="Adjacent"/>
-    <disable_collisions link1="piston_link" link2="screw_torx_T30" reason="Never"/>
     <disable_collisions link1="piston_link" link2="screwdriver" reason="Never"/>
     <disable_collisions link1="box" link2="screw_0" reason="Never"/>
     <disable_collisions link1="box" link2="screw_1" reason="Never"/>

@@ -97,7 +97,7 @@ int main(int argc, char** argv)
 
   goal_pose.position.x = 0.0; 
   goal_pose.position.y = 0.0;
-  goal_pose.position.z = 0.87;
+  goal_pose.position.z = 1.4;
   // goal_pose.pose.orientation.w = 1.0
   // moveit::core::RobotStatePtr kinematic_state = move_group.getCurrentState();
   // const moveit::core::JointModelGroup* joint_model_group =

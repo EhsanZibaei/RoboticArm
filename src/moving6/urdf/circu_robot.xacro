@@ -161,7 +161,35 @@
     </collision>
   </link>
   <!-- screwdriver_tcp -->
-  <link name="screwdriver_tcp"/>
+  <link name="screwdriver_tcp">
+      <visual>
+          <geometry>
+              <cylinder length="0.03" radius="0.015"/>
+          </geometry>
+          <material name="blue">
+              <color rgba="0 0 1 1"/>
+          </material>
+      </visual>
+      <collision>
+          <geometry>
+              <cylinder length="0.03" radius="0.015"/>
+          </geometry>
+      </collision>
+      <inertial>
+          <mass value="0.002"/>
+          <inertia ixx="1e-6" iyy="1e-6" izz="1e-6" ixy="0" ixz="0" iyz="0"/>
+      </inertial>
+  </link>
+
+  <gazebo reference="screwdriver_tcp">
+    <sensor type="contact" name="tcp_contact">
+      <always_on>true</always_on>
+      <update_rate>50</update_rate>
+      <contact>
+        <collision>tcp_disk_collision</collision>
+      </contact>
+      </sensor>
+  </gazebo>
   <!-- cylinder and piston -->
   <link name="cylinder_link">
     <inertial>
@@ -264,7 +292,9 @@
     <child link="screwdriver"/>
   </joint>
   <!-- screwdriver_tcp -->
-  <joint name="screwdriver-screwdriver_tcp" type="fixed">
+  <joint name="screwdriver-screwdriver_tcp" type="prismatic">
+    <axis xyz="0 0 1"/>
+    <limit effort="10" lower="-0.6" upper="0.0" velocity="0.1"/>
     <origin rpy="0 0 0" xyz="0.0 0.0 -0.3"/>
     <parent link="screwdriver"/>
     <child link="screwdriver_tcp"/>
