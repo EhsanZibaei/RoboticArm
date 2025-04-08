@@ -26,10 +26,10 @@
   </joint>
 
   <!-- Include screw_model -->
-  <xacro:include filename="circu_screws.urdf"/>
+  <!-- <xacro:include filename="circu_screws.urdf"/>
   <joint name="box_to_base" type="fixed">
     <parent link="base"/>
     <child link="box"/>
     <origin xyz="0 0 0.5" rpy="0 0 0"/>
-  </joint>
+  </joint> -->
 </robot>

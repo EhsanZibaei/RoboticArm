@@ -57,12 +57,29 @@ def generate_launch_description():
         parameters=[robot_description]
     )
 
-    gz_spawn_entity = Node(
+    gz_spawn_robot = Node(
         package='ros_gz_sim',
         executable='create',
         output='screen',
         arguments=['-topic', 'robot_description',
-                   '-name', 'cart', '-allow_renaming', 'true'],
+                   '-name', 'robot', '-allow_renaming', 'true'],
+    )
+
+    box_path = PathJoinSubstitution([
+            FindPackageShare('moving6'),
+            'urdf',
+            'circu_screws.urdf',
+    ])
+
+    gz_spawn_box = Node(
+            package='ros_gz_sim',
+            executable='create',
+            arguments=['-file', box_path, 
+                       '-name', 'my_robot',
+                        '-x', '0', '-y', '0', '-z', '0.5',  # optional pose offset
+                        '-parent', 'base'  # <- name of the link in the world model
+                       ],
+            output='screen'
     )
 
     joint_state_broadcaster_spawner = Node(
@@ -185,7 +202,7 @@ def generate_launch_description():
             launch_arguments=[('gz_args', [gz_args, 'empty.sdf -r --physics-engine gz-physics-bullet-featherstone-plugin'])]),
         RegisterEventHandler(
             event_handler=OnProcessExit(
-                target_action=gz_spawn_entity,
+                target_action=gz_spawn_robot,
                 on_exit=[joint_state_broadcaster_spawner],
             )
         ),
@@ -198,7 +215,8 @@ def generate_launch_description():
         ros2_control_node,
         bridge,
         node_robot_state_publisher,
-        gz_spawn_entity,
+        gz_spawn_robot,
+        gz_spawn_box,
         run_move_group_node,
         rviz_node,
         foxglove_bridge,
