@@ -75,9 +75,7 @@ def generate_launch_description():
             package='ros_gz_sim',
             executable='create',
             arguments=['-file', box_path, 
-                       '-name', 'my_robot',
-                        '-x', '0', '-y', '0', '-z', '0.5',  # optional pose offset
-                        '-parent', 'base'  # <- name of the link in the world model
+                       '-name', 'box_and_screws',
                        ],
             output='screen'
     )

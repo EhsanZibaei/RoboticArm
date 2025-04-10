@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="screws">
-
+    <link name="world"/>
     <link name="box">
         <visual>
             <geometry>
@@ -20,6 +20,11 @@
             <inertia ixx="0.1" iyy="0.1" izz="0.1" ixy="0" ixz="0" iyz="0"/>
         </inertial>
     </link>
+    <joint name="fixed" type="fixed">
+        <parent link="world"/>
+        <child link="box"/>
+        <origin xyz="0 0 0.5" rpy="0 0 0"/>
+    </joint>
 
     <!-- Screw Links and Joints -->
     <!-- Screw 0 -->

@@ -3,7 +3,7 @@
     <xacro:arg name="initial_positions_file" default="initial_positions.yaml" />
 
     <!-- Import circu urdf file -->
-    <xacro:include filename="$(find moving6)/urdf/circu_all.xacro" />
+    <xacro:include filename="$(find moving6)/urdf/circu_robot.xacro" />
 
     <!-- Import control_xacro -->
     <xacro:include filename="circu.ros2_control.xacro" />
