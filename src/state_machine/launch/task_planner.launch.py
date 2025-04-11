@@ -7,7 +7,7 @@ def generate_launch_description():
     # Load the robot configuration
     moveit_config = (
         MoveItConfigsBuilder(
-            "gen3", package_name="moving6"
+            "gen3", package_name="unscrew_simulation"
         )
         .robot_description()
         .robot_description_semantic(file_path="config/circu.srdf")
@@ -27,8 +27,8 @@ def generate_launch_description():
 
     # MoveGroupInterface demo executable
     robot_move_node = Node(
-        name="my_custom_node",
-        package="robot_sm",
+        name="task_planner_node",
+        package="state_machine",
         executable="robot_move_node",
         output="screen",
         parameters=[

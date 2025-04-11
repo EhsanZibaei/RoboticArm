@@ -35,7 +35,7 @@ def generate_launch_description():
             PathJoinSubstitution([FindExecutable(name='xacro')]),
             ' ',
             PathJoinSubstitution(
-                [FindPackageShare('moving6'),
+                [FindPackageShare('unscrew_simulation'),
                  'config', 'circu.urdf.xacro']
             ),
         ]
@@ -43,7 +43,7 @@ def generate_launch_description():
     robot_description = {'robot_description': robot_description_content}
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare('moving6'),
+            FindPackageShare('unscrew_simulation'),
             'config',
             'ros2_controllers.yaml',
         ]

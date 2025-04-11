@@ -23,7 +23,7 @@ def generate_launch_description():
     # Load the robot configuration
     moveit_config = (
         MoveItConfigsBuilder(
-            "gen3", package_name="moving6"
+            "gen3", package_name="unscrew_simulation"
         )
         .robot_description(mappings=launch_arguments)
         .trajectory_execution(file_path="config/moveit_controllers.yaml")
@@ -36,7 +36,7 @@ def generate_launch_description():
         .to_moveit_configs()
     )
 
-    pkg_my_robot = get_package_share_directory('moving6')
+    pkg_my_robot = get_package_share_directory('unscrew_simulation')
     # robot_description_content = xacro.process_file(os.path.join(pkg_my_robot, 'config', 'circu.urdf.xacro')).toxml()
 
     robot_state_publisher_node = Node(
@@ -55,7 +55,7 @@ def generate_launch_description():
 
     # RViz
     rviz_config_file = (
-        get_package_share_directory("moving6") + "/config/moveit.rviz"
+        get_package_share_directory("unscrew_simulation") + "/config/moveit.rviz"
     )
     rviz_node = Node(
         package="rviz2",

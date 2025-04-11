@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(moving6)
+project(unscrew_simulation)
 
 find_package(ament_cmake REQUIRED)
 

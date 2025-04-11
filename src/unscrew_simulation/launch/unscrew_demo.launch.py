@@ -28,15 +28,13 @@ from moveit_configs_utils import MoveItConfigsBuilder
 def generate_launch_description():
     # Launch Arguments
     use_sim_time = LaunchConfiguration('use_sim_time', default=True)
-    gz_args = LaunchConfiguration('gz_args', default='')
-
     # Get URDF via xacro
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name='xacro')]),
             ' ',
             PathJoinSubstitution(
-                [FindPackageShare('moving6'),
+                [FindPackageShare('unscrew_simulation'),
                  'config', 'circu.urdf.xacro']
             ),
         ]
@@ -44,13 +42,13 @@ def generate_launch_description():
     robot_description = {'robot_description': robot_description_content}
     robot_controllers = PathJoinSubstitution(
         [
-            FindPackageShare('moving6'),
+            FindPackageShare('unscrew_simulation'),
             'config',
             'ros2_controllers.yaml',
         ]
     )
 
-    node_robot_state_publisher = Node(
+    robot_state_publisher = Node(
         package='robot_state_publisher',
         executable='robot_state_publisher',
         output='screen',
@@ -66,7 +64,7 @@ def generate_launch_description():
     )
 
     box_path = PathJoinSubstitution([
-            FindPackageShare('moving6'),
+            FindPackageShare('unscrew_simulation'),
             'urdf',
             'circu_screws.urdf',
     ])
@@ -79,6 +77,24 @@ def generate_launch_description():
                        ],
             output='screen'
     )
+
+    bin_path = PathJoinSubstitution([
+            FindPackageShare('unscrew_simulation'),
+            'urdf',
+            'bin.sdf',
+    ])
+
+    gz_spawn_bin = Node(
+            package='ros_gz_sim',
+            executable='create',
+            name='spawn_bin_on_box',
+            arguments=[
+                '-file', bin_path,
+                '-name', 'bin_on_box',
+                '-x', '0', '-y', '2', '-z', '0'
+            ],
+            output='screen'
+        )
 
     joint_state_broadcaster_spawner = Node(
         package='controller_manager',
@@ -124,16 +140,13 @@ def generate_launch_description():
     )
 
     launch_arguments = {
-        "robot_ip": "xxx.yyy.zzz.www",
         "use_fake_hardware": "false",
-        "gripper": "robotiq_2f_85",
-        "dof": "7",
-    }
+        }
 
     # Load the robot configuration
     moveit_config = (
         MoveItConfigsBuilder(
-            "gen3", package_name="moving6"
+            "gen3", package_name="unscrew_simulation"
         )
         .robot_description(mappings=launch_arguments)
         .trajectory_execution(file_path="config/moveit_controllers.yaml")
@@ -147,7 +160,7 @@ def generate_launch_description():
     )
 
     # Start the actual move_group node/action server
-    run_move_group_node = Node(
+    move_group_node = Node(
         package="moveit_ros_move_group",
         executable="move_group",
         output="screen",
@@ -159,7 +172,7 @@ def generate_launch_description():
 
     # RViz
     rviz_config_file = (
-        get_package_share_directory("moving6") + "/config/moveit.rviz"
+        get_package_share_directory("unscrew_simulation") + "/config/moveit.rviz"
     )
     rviz_node = Node(
         package="rviz2",
@@ -197,7 +210,7 @@ def generate_launch_description():
                 [PathJoinSubstitution([FindPackageShare('ros_gz_sim'),
                                        'launch',
                                        'gz_sim.launch.py'])]),
-            launch_arguments=[('gz_args', [gz_args, 'empty.sdf -r --physics-engine gz-physics-bullet-featherstone-plugin'])]),
+            launch_arguments=[('gz_args', ['empty.sdf -r --physics-engine gz-physics-bullet-featherstone-plugin'])]),
         RegisterEventHandler(
             event_handler=OnProcessExit(
                 target_action=gz_spawn_robot,
@@ -210,12 +223,13 @@ def generate_launch_description():
                 on_exit=[joint_trajectory_controller_spawner],
             )
         ),
-        ros2_control_node,
+        # ros2_control_node,
         bridge,
-        node_robot_state_publisher,
+        robot_state_publisher,
         gz_spawn_robot,
         gz_spawn_box,
-        run_move_group_node,
+        gz_spawn_bin,
+        move_group_node,
         rviz_node,
         foxglove_bridge,
         foxglove_studio,
